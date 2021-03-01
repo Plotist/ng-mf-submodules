@@ -1,5 +1,7 @@
 const path = require("path");
 const htmlWebpackPlugin = require("html-webpack-plugin");
+const { ModuleFederationPlugin } = require("webpack").container;
+const deps = require("./package.json").dependencies;
 
 module.exports = {
   entry: './src/index.js',
@@ -7,6 +9,8 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist')
   },
+  mode: 'development',
+  devtool: 'eval-source-map',
   module: {
     rules: [
       {
@@ -28,6 +32,27 @@ module.exports = {
   plugins: [
     new htmlWebpackPlugin({
       template: path.resolve(__dirname, "src", "index.html")
+    }),
+    new ModuleFederationPlugin({
+      name: "secondRhrc",
+      library: { type: "var", name: "secondRhrc" },
+      filename: "remoteEntry.js",
+      exposes: {
+        './App': './src/App/App',
+      },
+      shared: {
+        ...deps,
+        react: {
+          singleton: true,
+          eager: true,
+          requiredVersion: deps.react,
+        },
+        "react-dom": {
+          singleton: true,
+          eager: true,
+          requiredVersion: deps["react-dom"],
+        },
+      }
     })
   ],
   devServer: {

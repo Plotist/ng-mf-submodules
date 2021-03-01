@@ -1,12 +1,16 @@
 const path = require("path");
 const htmlWebpackPlugin = require("html-webpack-plugin");
+const { ModuleFederationPlugin } = require("webpack").container;
+const deps = require("./package.json").dependencies;
 
 module.exports = {
   entry: './app/index.js',
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'build')
+    path: path.resolve(__dirname, 'dist')
   },
+  mode: 'development',
+  devtool: 'eval-source-map',
   module: {
     rules: [
       {
@@ -26,12 +30,18 @@ module.exports = {
     ]
   },
   plugins: [
+    new ModuleFederationPlugin({
+      remoteType: 'var',
+      remotes: {
+        secondRhrc: "secondRhrc"
+      }
+    }),
     new htmlWebpackPlugin({
       template: path.resolve(__dirname, "app", "index.html")
-    })
+    }),
   ],
   devServer: {
-    contentBase: path.join(__dirname, 'build'),
+    contentBase: path.join(__dirname, 'dist'),
     compress: true,
     watchContentBase: true,
     port: 8888
