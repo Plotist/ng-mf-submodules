@@ -18,13 +18,14 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "ngx-build-plus:browser",
           "options": {
             "outputPath": "dist/react-consumer-app",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
+            "extraWebpackConfig": "webpack.extra.js",
             "aot": true,
             "assets": [
               "src/favicon.ico",
@@ -66,9 +67,10 @@
           }
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "ngx-build-plus:dev-server",
           "options": {
-            "browserTarget": "react-consumer-app:build"
+            "browserTarget": "react-consumer-app:build",
+            "extraWebpackConfig": "webpack.extra.js"
           },
           "configurations": {
             "production": {
@@ -83,7 +85,7 @@
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "ngx-build-plus:karma",
           "options": {
             "main": "src/test.ts",
             "polyfills": "src/polyfills.ts",
@@ -127,5 +129,8 @@
       }
     }
   },
-  "defaultProject": "react-consumer-app"
+  "defaultProject": "react-consumer-app",
+  "cli": {
+    "packageManager": "yarn"
+  }
 }

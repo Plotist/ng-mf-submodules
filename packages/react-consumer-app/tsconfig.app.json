@@ -7,7 +7,8 @@
   },
   "files": [
     "src/main.ts",
-    "src/polyfills.ts"
+    "src/polyfills.ts",
+    "src/components/remote-react-component/RemoteReactComponentWrapper.tsx"
   ],
   "include": [
     "src/**/*.d.ts"
