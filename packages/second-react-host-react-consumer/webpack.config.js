@@ -43,13 +43,17 @@ module.exports = {
       shared: {
         ...deps,
         react: {
-          singleton: true,
+          // 'eager' Needed for rendering this app as a standalone. See more here:
+          // https://www.angulararchitects.io/aktuelles/the-microfrontend-revolution-part-2-module-federation-with-angular/
           eager: true,
+          singleton: true,
           requiredVersion: deps.react,
         },
         "react-dom": {
-          singleton: true,
+          // 'eager' needed for rendering this app as a standalone. See more here:
+          // https://www.angulararchitects.io/aktuelles/the-microfrontend-revolution-part-2-module-federation-with-angular/
           eager: true,
+          singleton: true,
           requiredVersion: deps["react-dom"],
         },
       }

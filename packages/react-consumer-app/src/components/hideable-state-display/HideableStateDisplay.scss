@@ -1,0 +1,39 @@
+$border-radius: 4px;
+
+@mixin with-border($radius: $border-radius, $border-color: black) {
+  border: 1px solid $border-color;
+  border-radius: $radius;
+}
+
+.hidable-state-display {
+  @include with-border($border-radius, rgba(90, 90, 90, 0.25));
+
+  filter: drop-shadow(2px 4px 6px rgba(130, 130, 130, 0.25));
+  background-color: rgba(85, 85, 85, 0.25);
+  border: 1px solid rgba(85, 85, 85, 0.25);
+  display: inline-block;
+  user-select: none;
+  padding: 20px;
+
+  .comp-props {
+    color: black;
+
+    .increase-button {
+      @include with-border($border-radius, #3e3e3e);
+      background-color: white;
+      margin-left: 40px;
+      padding: 4px 6px;
+      cursor: pointer;
+      color: black;
+
+      &:hover {
+        filter: drop-shadow(2px 4px 6px black);
+      }
+    }
+  }
+
+  .comp-state {
+    color: #59763f;
+    margin-top: 20px;
+  }
+}
